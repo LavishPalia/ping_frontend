@@ -9,7 +9,14 @@ import Loading from "./Loading";
 import toast from "react-hot-toast";
 
 const VerifyOtp = () => {
-  const { isAuth, setIsAuth, loading: userLoading, setUser } = useAppData();
+  const {
+    isAuth,
+    setIsAuth,
+    loading: userLoading,
+    setUser,
+    fetchChats,
+    fetchUsers,
+  } = useAppData();
   const [loading, setLoading] = useState(false);
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
   const [error, setError] = useState<string>("");
@@ -101,6 +108,9 @@ const VerifyOtp = () => {
 
       setUser(data.user);
       setIsAuth(true);
+
+      fetchChats();
+      fetchUsers();
     } catch (error: any) {
       setError(error?.response?.data?.message);
     } finally {
