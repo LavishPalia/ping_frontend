@@ -171,7 +171,11 @@ const ChatSidebar = ({
                           {chat.user.name}
                         </span>
                         {unseenCount > 0 && (
-                          <div className="bg-red-600 text-white text-xs font-bold rounded-full min-w-[22px] h-5.5 flex items-center justify-center px-2">
+                          <div
+                            className="bg-red-600 text-white text-xs font-bold rounded-full min-w-[22px] h-5.5 flex items-center justify-center px-2"
+                            aria-label={`${unseenCount} unseen messages`}
+                            role="status"
+                          >
                             {unseenCount > 99 ? "99+" : unseenCount}
                           </div>
                         )}
@@ -181,12 +185,12 @@ const ChatSidebar = ({
                           {isSentByMe ? (
                             <CornerUpLeft
                               size={14}
-                              className="text-blue-400 text-shrink-0"
+                              className="text-blue-400 shrink-0"
                             />
                           ) : (
                             <CornerDownRight
                               size={14}
-                              className="text-green-400 text-shrink-0"
+                              className="text-green-400 shrink-0"
                             />
                           )}
 

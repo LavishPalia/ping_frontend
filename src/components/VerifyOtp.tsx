@@ -82,8 +82,8 @@ const VerifyOtp = () => {
     e.preventDefault();
 
     const otpString = otp.join("");
-    if (otpString.length !== 6) {
-      setError("Please enter a valid OTP");
+    if (otpString.length !== 6 || !/^\d+$/.test(otpString)) {
+      setError("Please enter a valid 6-digit Code");
       return;
     }
 
@@ -109,10 +109,9 @@ const VerifyOtp = () => {
       setUser(data.user);
       setIsAuth(true);
 
-      fetchChats();
-      fetchUsers();
+      await Promise.all([fetchChats(), fetchUsers()]);
     } catch (error: any) {
-      setError(error?.response?.data?.message);
+      setError(error?.response?.data?.message || "Verification failed");
     } finally {
       setLoading(false);
     }
@@ -129,7 +128,7 @@ const VerifyOtp = () => {
       toast.success(data.message);
       setTimer(60);
     } catch (error: any) {
-      setError(error?.response?.data?.message);
+      setError(error?.response?.data?.message || "Failed to resend code");
     } finally {
       setResendLoading(false);
     }
