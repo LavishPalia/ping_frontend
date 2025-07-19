@@ -20,7 +20,7 @@ const ProfilePage = () => {
     setName(user?.name || "");
   };
 
-  const submitHandler = async (e: any) => {
+  const submitHandler = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!name) return;
 
@@ -48,7 +48,7 @@ const ProfilePage = () => {
 
       toast.success(data.message);
     } catch (error: any) {
-      console.log(error);
+      console.error("Profile update error:", error);
       toast.error(error?.response?.data?.message || "Failed to update name");
     }
   };
@@ -112,6 +112,8 @@ const ProfilePage = () => {
                         type="text"
                         value={name}
                         onChange={(e) => setName(e.target.value)}
+                        aria-label="Display name"
+                        placeholder="Enter your display name"
                         className="w-full px-4 py-3 bg-gray-700 border border-gray-600 
                         rounded-lg text-white placeholder-gray-600"
                       />

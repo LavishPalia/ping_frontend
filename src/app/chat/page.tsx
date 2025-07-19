@@ -262,8 +262,6 @@ const ChatPage = () => {
 
   useEffect(() => {
     socket?.on("newMessage", (message) => {
-      console.log("received new message", message);
-
       if (
         message.chatId === selectedUser &&
         message.sender !== loggedInUser?._id
@@ -287,8 +285,6 @@ const ChatPage = () => {
     });
 
     socket?.on("messageSeen", (data) => {
-      console.log("message seen by", data);
-
       if (data.chatId === selectedUser && data.userId !== loggedInUser?._id) {
         setMessages((prev) => {
           if (!prev) return null;
@@ -318,16 +314,12 @@ const ChatPage = () => {
     });
 
     socket?.on("userTyping", (data) => {
-      console.log("received user typing", data);
-
       if (data.chatId === selectedUser && data.userId !== loggedInUser?._id) {
         setIsTyping(true);
       }
     });
 
     socket?.on("userStoppedTyping", (data) => {
-      console.log("received user stopped typing", data);
-
       if (data.chatId === selectedUser && data.userId !== loggedInUser?._id) {
         setIsTyping(false);
       }

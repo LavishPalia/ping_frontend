@@ -26,7 +26,17 @@ export const SocketProvider = ({ children }: ProviderProps) => {
   useEffect(() => {
     if (!user?._id) return;
 
-    const newSocket = io(chat_service, { query: { userId: user._id } });
+    const newSocket = io(chat_service, {
+      query: { userId: user._id },
+      reconnection: true,
+      reconnectionAttempts: 5,
+      reconnectionDelay: 1000,
+      timeout: 20000,
+    });
+
+    newSocket.on("connect_error", (error) => {
+      console.error("Socket connection error:", error);
+    });
     setSocket(newSocket);
 
     newSocket.on("getOnlineUser", (users: string[]) => {
@@ -34,6 +44,7 @@ export const SocketProvider = ({ children }: ProviderProps) => {
     });
 
     return () => {
+      newSocket.off("getOnlineUser");
       newSocket.disconnect();
     };
   }, [user?._id]);
