@@ -66,8 +66,9 @@ const ChatMessages = ({
                       <div className="relative group">
                         <img
                           src={message.image.url}
-                          alt="shared image"
+                          alt={`Image shared by ${isSentByMe ? "you" : "user"}`}
                           className="max-w-full h-auto rounded-lg"
+                          loading="lazy"
                         />
                       </div>
                     )}

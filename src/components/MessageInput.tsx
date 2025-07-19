@@ -5,7 +5,7 @@ interface MessageInputProps {
   selectedUser: string | null;
   message: string;
   setMessage: (message: string) => void;
-  handleMessageSend: (e: any, imageFile?: File | null) => void;
+  handleMessageSend: (e: any, imageFile?: File | null) => Promise<void>;
 }
 
 const MessageInput = ({

@@ -47,11 +47,11 @@ const ChatHeader = ({ user, setSidebarOpen, isTyping }: ChatHeaderProps) => {
           ) : (
             <div className="flex items-center gap-4">
               <div className="w-14 h-14 rounded-full bg-gray-700 flex items-center justify-center">
-                <UserCircle className="w-8 h-8 to-gray-300" />
+                <UserCircle className="w-8 h-8 text-gray-300" />
               </div>
 
               <div>
-                <h2 className="text-2xl font-bold to-gray-400">
+                <h2 className="text-2xl font-bold text-gray-400">
                   Select a conversation
                 </h2>
                 <p className="text-sm text-gray-500 mt-1">

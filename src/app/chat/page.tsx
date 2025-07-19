@@ -104,7 +104,10 @@ const ChatPage = () => {
     }
   };
 
-  const handleMessageSend = async (e: any, imageFile?: File | null) => {
+  const handleMessageSend = async (
+    e: React.FormEvent,
+    imageFile?: File | null
+  ) => {
     e.preventDefault();
 
     if (!message.trim() && !imageFile) return;
