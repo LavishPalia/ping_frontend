@@ -9,7 +9,14 @@ import Loading from "./Loading";
 import toast from "react-hot-toast";
 
 const VerifyOtp = () => {
-  const { isAuth, setIsAuth, loading: userLoading, setUser } = useAppData();
+  const {
+    isAuth,
+    setIsAuth,
+    loading: userLoading,
+    setUser,
+    fetchChats,
+    fetchUsers,
+  } = useAppData();
   const [loading, setLoading] = useState(false);
   const [otp, setOtp] = useState<string[]>(["", "", "", "", "", ""]);
   const [error, setError] = useState<string>("");
@@ -75,8 +82,8 @@ const VerifyOtp = () => {
     e.preventDefault();
 
     const otpString = otp.join("");
-    if (otpString.length !== 6) {
-      setError("Please enter a valid OTP");
+    if (otpString.length !== 6 || !/^\d+$/.test(otpString)) {
+      setError("Please enter a valid 6-digit Code");
       return;
     }
 
@@ -101,8 +108,10 @@ const VerifyOtp = () => {
 
       setUser(data.user);
       setIsAuth(true);
+
+      await Promise.all([fetchChats(), fetchUsers()]);
     } catch (error: any) {
-      setError(error?.response?.data?.message);
+      setError(error?.response?.data?.message || "Verification failed");
     } finally {
       setLoading(false);
     }
@@ -119,7 +128,7 @@ const VerifyOtp = () => {
       toast.success(data.message);
       setTimer(60);
     } catch (error: any) {
-      setError(error?.response?.data?.message);
+      setError(error?.response?.data?.message || "Failed to resend code");
     } finally {
       setResendLoading(false);
     }
